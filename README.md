@@ -1,0 +1,34 @@
+# MinettePia CPU対戦
+
+2026-09-28のMinettepia_1.0のカード・ステータス・戦術処理を使う、ブラウザー向けCPU対戦です。
+
+- キャラ308枚・戦術160枚。キャラ1枚＋異なる戦術カード3枚を選択。
+- SSR16枚の変身画像、5ターン目の全属性＋50、Mine 1stの成長を反映。
+- 体得、毒の昇格、予告、反射による共倒れを含む現行ルール。
+- CPUはプレイヤーが選ぶ前に決定し、未公開の戦術や現在の選択を参照しません。
+- MP・所有カード・戦績などVRChatの保存データとは連動しません。
+
+## 起動
+
+Node.js 20以降で `npm start`。`http://127.0.0.1:4173` を開きます。
+配信ファイルは `dist/` にあり、ビルド処理は不要です。
+
+## GitHub Pages
+
+`main` ブランチへpushすると、戦闘ルールの照合を実行してから `dist/` をGitHub Pagesへ自動公開します。
+リポジトリの Settings → Pages → Source は GitHub Actions を使います。
+設定方法は[GitHub公式ガイド](https://docs.github.com/en/get-started/start-your-journey/deploying-your-website-automatically)に準拠しています。
+
+## 確認結果
+
+`npm test`：Unityから取得した512件の計算結果と、元のC#ルールで生成した160試合・1,386ターンを照合。19,920アサーション合格。
+
+EdgeのPC（1440×1000）・スマートフォン相当（390×844）で、デッキ選択、戦術選択、属性選択、結果、試合終了、再戦、ダイアログを操作し、各画面のスクリーンショットを確認。横はみ出し・画像の読み込み失敗・JavaScriptエラーなし。
+
+SSRの5ターン目の画像切り替えもブラウザーで確認。実機スマートフォン・VRChat実機の検証は含みません。WebMCPは対応APIが利用できないブラウザー環境のため実行検証対象外です。
+
+## 更新する場合
+
+`dist/cards.json` はUnityのカードDB・属性DB・SSR DBのスナップショットです。Unity側を更新しても、このサイトへ自動同期されません。カードIDを維持してデータ・画像を再書き出し、`npm test` で照合してください。
+
+`tools/engine-fixtures.json` はUnity側計算結果、`tools/round-fixtures.json` はC#試合シミュレーターの結果です。ルール変更時には比較元の結果も更新する必要があります。

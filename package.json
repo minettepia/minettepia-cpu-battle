@@ -1,0 +1,1 @@
+{"name":"minettepia-cpu","private":true,"type":"module","scripts":{"test":"node tools/test-rules.mjs","start":"node tools/serve.mjs"}}
