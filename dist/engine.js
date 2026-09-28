@@ -74,4 +74,4 @@ export function resolve(state,data,moves,slots,random=Math.random){
  state.history.push(r);return r;
 }
 export function statusLabels(s){const a=[];if(s.transformed)a.push('変身');if(s.poison.left)a.push(`${s.poison.amount>=1000?'致死毒':s.poison.amount>=75?'猛毒':'毒'} ${s.poison.amount} ×残り${s.poison.left}`);if(s.revenge)a.push(`復讐 残り${s.revenge}`);if(s.sleep)a.push(`睡眠 残り${s.sleep}`);if(s.berserk.length)a.push(`狂化 ×${s.berserk.length}（${Math.max(...s.berserk)}ターン）`);for(const f of s.foretell)a.push(`予告 ${f.amount} / ${f.left}ターン後`);return a;}
-export function activated(r,i){const t=r.types[i],win=r.roundWinner===i+1,lose=r.roundWinner===2-i;return t===11?!!(r.learnMask&(1<<i)):t===8?r.roundWinner===0:[3,7,9].includes(t)?lose:t>0&&win;}
+export function activated(r,i){const t=r.types[i],win=r.roundWinner===i+1,lose=r.roundWinner===2-i;return t===11?!!(r.learnMask&(1<<i)):t===2?r.roundWinner!==0:t===8?r.roundWinner===0:[3,7,9].includes(t)?lose:t>0&&win;}
